@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>スマホ風ガチャゲーム</title>
+
+<style>
+body{
+    font-family: sans-serif;
+    background: linear-gradient(180deg,#1e3c72,#2a5298);
+    color:white;
+    text-align:center;
+    padding-top:50px;
+}
+
+h1{
+    margin-bottom:30px;
+}
+
+#result{
+    margin-top:30px;
+    font-size:28px;
+    padding:20px;
+    border-radius:15px;
+    width:300px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+button{
+    font-size:20px;
+    padding:15px 30px;
+    border:none;
+    border-radius:10px;
+    background:#ffd700;
+    color:black;
+    cursor:pointer;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+.star3{
+    background:#666;
+}
+
+.star4{
+    background:#3aa0ff;
+}
+
+.star5{
+    background:linear-gradient(45deg,#ffd700,#ff9f00);
+    animation: shine 1s infinite alternate;
+}
+
+@keyframes shine{
+    from{box-shadow:0 0 10px gold;}
+    to{box-shadow:0 0 30px gold;}
+}
+
+#animation{
+    font-size:40px;
+    height:60px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>スマホ風ガチャ</h1>
+
+<div id="animation"></div>
+
+<button onclick="drawGacha()">ガチャを引く！</button>
+
+<div id="result">結果がここに表示されます</div>
+
+<script>
+
+const characters = [
+{name:"スライム", rarity:3},
+{name:"ゴブリン", rarity:3},
+{name:"弓兵", rarity:3},
+
+{name:"騎士", rarity:4},
+{name:"魔法使い", rarity:4},
+
+{name:"ドラゴン", rarity:5},
+{name:"勇者", rarity:5}
+]
+
+function drawGacha(){
+
+    const animation = document.getElementById("animation")
+    const result = document.getElementById("result")
+
+    result.className=""
+    result.innerHTML=""
+
+    animation.innerHTML="✨✨✨"
+
+    setTimeout(()=>{
+
+        let r = Math.random()
+
+        let rarity
+
+        if(r < 0.7){
+            rarity = 3
+        }else if(r < 0.95){
+            rarity = 4
+        }else{
+            rarity = 5
+        }
+
+        let pool = characters.filter(c => c.rarity === rarity)
+
+        let char = pool[Math.floor(Math.random()*pool.length)]
+
+        result.classList.add("star"+rarity)
+
+        let stars = "★".repeat(rarity)
+
+        result.innerHTML = `
+        <div>${stars}</div>
+        <div>${char.name}</div>
+        `
+
+        animation.innerHTML=""
+
+    },1000)
+
+}
+
+</script>
+
+</body>
+</html>
